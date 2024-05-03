@@ -20,8 +20,8 @@ RISE_CHANCE = 60 # 1 in x chance of reappearing every minute
 class MainWindow(QMainWindow):  
 
     # Cat position variables
-    x_pos = random.randrange(int(SW * 0.1), int(SW * 0.8))
     y_pos = Y_MAX
+    x_pos = 0
     is_rising = True
     qlabel = 0
 
@@ -42,10 +42,14 @@ class MainWindow(QMainWindow):
         self.label = self.qlabel
         self.setGeometry(0, 0, IW, IH)
 
+        # Picking a spot for cat :3
+        self.x_pos = random.randrange(0, int(SW * 0.98))
+
         # Position update methods / QT mainloop
         QTimer.singleShot(10, self.pos_update)
         QTimer.singleShot(10, self.try_to_reappear)
         self.show()
+
 
     # Method for updating position, called every 30ms
     def pos_update(self):
@@ -68,7 +72,7 @@ class MainWindow(QMainWindow):
         if not self.is_rising:
             if random.randint(1, RISE_CHANCE) == 1:
                 self.is_rising = True
-                self.x_pos = random.randrange(int(SW * 0.1), int(SW * 0.8))
+                self.x_pos = random.randrange(0, int(SW * 0.98))
         QTimer.singleShot(60000, self.try_to_reappear)
 
     # Click event handler
